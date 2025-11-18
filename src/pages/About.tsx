@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Copy } from "lucide-react";
+import { toast } from "sonner";
 
 const About = () => {
   const navigate = useNavigate();
+
+  const copyUPI = () => {
+    navigator.clipboard.writeText("gumu642@okicici");
+    toast.success("UPI ID copied to clipboard!");
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -18,52 +24,110 @@ const About = () => {
           Back to Home
         </Button>
 
-        <Card className="p-8 bg-card border-border">
-          <h1 className="text-4xl font-bold mb-6">About Professional Explainer AI</h1>
-          
-          <div className="space-y-6 text-foreground">
-            <section>
-              <h2 className="text-2xl font-semibold mb-3">What is this?</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Professional Explainer AI is a powerful tool designed to transform complex text,
-                notes, and concepts into clear, structured, and deeply understandable explanations.
-              </p>
-            </section>
+        <Card className="p-8 bg-card border-border space-y-8">
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <p className="text-muted-foreground text-sm">Student • Developer • Builder</p>
+            <h1 className="text-4xl font-bold">Built by a Student,<br />For Students</h1>
+            <p className="text-lg text-muted-foreground">"Why pay for premium when you can build it yourself?" 🎯</p>
+          </div>
 
-            <section>
-              <h2 className="text-2xl font-semibold mb-3">How it works</h2>
-              <p className="text-muted-foreground leading-relaxed mb-3">
-                Simply paste any content you want explained, and our AI will generate:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>A simple explanation for beginners</li>
-                <li>Detailed professional analysis</li>
-                <li>Breakdown of complex terms</li>
-                <li>Real-world examples</li>
-                <li>Why the topic matters</li>
-              </ul>
-            </section>
+          {/* The Origin Story */}
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold">The Origin Story</h2>
+            <div className="space-y-3 text-muted-foreground leading-relaxed">
+              <p>Hi there! 👋 I'm a second-year Computer Science & Engineering (AI/ML) student at Brainware University.</p>
+              <p>Like many students, I love music. Unlike many students, I got fed up with Spotify's constant premium prompts. So naturally, I did what any developer would do—I built my own solution. 🎵</p>
+              <p>But why stop there? I realized students need more than just music. They need powerful tools to study smarter, not harder. That's when this AI-powered note generator was born.</p>
+            </div>
+          </section>
 
-            <section>
-              <h2 className="text-2xl font-semibold mb-3">Features</h2>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>Clean, professional formatting</li>
-                <li>Beginner-friendly explanations</li>
-                <li>Real-time streaming responses</li>
-                <li>Comprehensive coverage of topics</li>
-                <li>Beautiful markdown formatting</li>
-              </ul>
-            </section>
+          {/* Why I Built This */}
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold">Why I Built This</h2>
+            <div className="space-y-3 text-muted-foreground leading-relaxed">
+              <p>Traditional note-taking is slow. Reading through textbooks is overwhelming. And let's be honest—most of us leave studying until the last minute. 😅</p>
+              <p>This AI note generator transforms any study material into comprehensive, structured notes in seconds. It's like having a personal tutor who never gets tired and explains everything in detail.</p>
+              <p>From biology to computer science, from physics to humanities—if you can paste it, we can transform it into study gold. ✨</p>
+            </div>
+          </section>
 
-            <section>
-              <h2 className="text-2xl font-semibold mb-3">Perfect for</h2>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>Students studying complex topics</li>
-                <li>Professionals learning new concepts</li>
-                <li>Anyone wanting clearer understanding</li>
-                <li>Breaking down technical jargon</li>
-              </ul>
-            </section>
+          {/* Tech Stack */}
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold">Tech Stack</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-secondary rounded-lg">
+                <h3 className="font-semibold mb-1">React</h3>
+                <p className="text-sm text-muted-foreground">UI framework for smooth interactions</p>
+              </div>
+              <div className="p-4 bg-secondary rounded-lg">
+                <h3 className="font-semibold mb-1">TypeScript</h3>
+                <p className="text-sm text-muted-foreground">Type-safe code for reliability</p>
+              </div>
+              <div className="p-4 bg-secondary rounded-lg">
+                <h3 className="font-semibold mb-1">Tailwind CSS</h3>
+                <p className="text-sm text-muted-foreground">Beautiful, responsive design</p>
+              </div>
+              <div className="p-4 bg-secondary rounded-lg">
+                <h3 className="font-semibold mb-1">AI Models</h3>
+                <p className="text-sm text-muted-foreground">Powered by Gemini 2.5-Flash</p>
+              </div>
+              <div className="p-4 bg-secondary rounded-lg">
+                <h3 className="font-semibold mb-1">Lovable Cloud</h3>
+                <p className="text-sm text-muted-foreground">Serverless backend infrastructure</p>
+              </div>
+              <div className="p-4 bg-secondary rounded-lg">
+                <h3 className="font-semibold mb-1">Markdown</h3>
+                <p className="text-sm text-muted-foreground">Rich text formatting for notes</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Quote */}
+          <div className="text-center py-6 border-y border-border">
+            <p className="text-lg italic text-muted-foreground">"The best way to learn is to build something you wish existed."</p>
+            <p className="text-sm text-muted-foreground mt-2">— Every developer ever</p>
+          </div>
+
+          {/* Support the Creator */}
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">Support the Creator ❤️</h2>
+            <p className="text-muted-foreground">If this tool helped you ace your exams or saved you hours of studying, consider buying me a coffee! ☕</p>
+            
+            <div className="bg-secondary p-6 rounded-lg space-y-4">
+              <p className="font-semibold">Donate via GPay</p>
+              <p className="text-sm text-muted-foreground">Or copy UPI ID:</p>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 bg-background px-4 py-2 rounded text-foreground">gumu642@okicici</code>
+                <Button variant="outline" size="sm" onClick={copyUPI}>
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy
+                </Button>
+              </div>
+              <p className="text-sm text-muted-foreground">Every contribution helps keep this project alive and free for students! 🚀</p>
+            </div>
+          </section>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div className="p-4 bg-secondary rounded-lg">
+              <div className="text-3xl mb-2">🎓</div>
+              <p className="text-sm text-muted-foreground">2nd Year CSE Student</p>
+            </div>
+            <div className="p-4 bg-secondary rounded-lg">
+              <div className="text-3xl mb-2">🎵</div>
+              <p className="text-sm text-muted-foreground">Music Player Builder</p>
+            </div>
+            <div className="p-4 bg-secondary rounded-lg">
+              <div className="text-3xl mb-2">🤖</div>
+              <p className="text-sm text-muted-foreground">AI/ML Enthusiast</p>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center space-y-2 pt-6">
+            <p className="text-muted-foreground">Built with 💙 by a student who refused to pay for premium</p>
+            <p className="text-sm text-muted-foreground">Keep learning. Keep building. Keep growing. 🚀</p>
           </div>
         </Card>
       </div>
