@@ -123,7 +123,39 @@ const Index = () => {
 
         {output && (
           <Card className="p-6 bg-card border-border">
-            <h2 className="text-2xl font-bold mb-4">Generated Explanation</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">Generated Explanation</h2>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(output);
+                    toast.success("Copied to clipboard!");
+                  }}
+                >
+                  Copy
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const blob = new Blob([output], { type: "text/markdown" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "explanation.md";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    toast.success("Downloaded successfully!");
+                  }}
+                >
+                  Download
+                </Button>
+              </div>
+            </div>
             <div className="prose prose-invert prose-sm max-w-none break-words whitespace-pre-wrap overflow-wrap-anywhere">
               <ReactMarkdown>{output}</ReactMarkdown>
             </div>
