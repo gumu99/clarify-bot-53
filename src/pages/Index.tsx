@@ -86,7 +86,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4 pt-20 pb-8 max-w-4xl">
+      <div className="container mx-auto px-4 pt-8 pb-8 max-w-4xl">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
           <img src={logo} alt="AI Logo" className="h-16 w-auto" />
           <div className="flex gap-2 flex-wrap justify-center">
