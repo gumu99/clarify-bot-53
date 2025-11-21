@@ -93,7 +93,9 @@ const Index = () => {
               variant="outline"
               size="sm"
               onClick={() => {
-                window.location.href = "upi://pay?pa=gumu642@okicici&pn=AI Notes Generator&cu=INR";
+                const upiUrl = "upi://pay?pa=gumu642@okicici&pn=AI%20Notes%20Generator&cu=INR";
+                window.open(upiUrl, '_blank');
+                toast.success("Opening payment app...");
               }}
             >
               <Heart className="w-4 h-4 mr-2" />

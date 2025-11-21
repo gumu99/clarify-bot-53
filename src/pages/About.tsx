@@ -1,16 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Copy } from "lucide-react";
-import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 const About = () => {
   const navigate = useNavigate();
-
-  const copyUPI = () => {
-    navigator.clipboard.writeText("gumu642@okicici");
-    toast.success("UPI ID copied to clipboard!");
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -88,25 +82,6 @@ const About = () => {
             <p className="text-lg italic text-muted-foreground">"The best way to learn is to build something you wish existed."</p>
             <p className="text-sm text-muted-foreground mt-2">— Every developer ever</p>
           </div>
-
-          {/* Support the Creator */}
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">Support the Creator ❤️</h2>
-            <p className="text-muted-foreground">If this tool helped you ace your exams or saved you hours of studying, consider buying me a coffee! ☕</p>
-            
-            <div className="bg-secondary p-6 rounded-lg space-y-4">
-              <p className="font-semibold">Donate via GPay</p>
-              <p className="text-sm text-muted-foreground">Or copy UPI ID:</p>
-              <div className="flex items-center gap-2">
-                <code className="flex-1 bg-background px-4 py-2 rounded text-foreground">gumu642@okicici</code>
-                <Button variant="outline" size="sm" onClick={copyUPI}>
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground">Every contribution helps keep this project alive and free for students! 🚀</p>
-            </div>
-          </section>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
