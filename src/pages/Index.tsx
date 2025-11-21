@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Loader2, Info, Heart } from "lucide-react";
 import { toast } from "sonner";
-import ReactMarkdown from "react-markdown";
 import jsPDF from "jspdf";
 import logo from "@/assets/logo.png";
 
@@ -200,22 +199,10 @@ const Index = () => {
               </div>
             </div>
             <div className="prose prose-invert max-w-none break-words">
-              <ReactMarkdown 
-                components={{
-                  h1: ({children}) => <h1 className="text-2xl font-bold mb-4 mt-6 text-foreground">{children}</h1>,
-                  h2: ({children}) => <h2 className="text-xl font-semibold mb-3 mt-5 text-foreground">{children}</h2>,
-                  h3: ({children}) => <h3 className="text-lg font-semibold mb-2 mt-4 text-foreground">{children}</h3>,
-                  p: ({children}) => <p className="mb-4 leading-relaxed text-foreground/90">{children}</p>,
-                  ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>,
-                  ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>,
-                  li: ({children}) => <li className="leading-relaxed text-foreground/90">{children}</li>,
-                  strong: ({children}) => <strong className="font-semibold text-foreground">{children}</strong>,
-                  em: ({children}) => <em className="italic text-foreground/90">{children}</em>,
-                  blockquote: ({children}) => <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-foreground/80">{children}</blockquote>,
-                }}
-              >
-                {output}
-              </ReactMarkdown>
+              <div 
+                dangerouslySetInnerHTML={{ __html: output }}
+                className="[&_p]:mb-4 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-2 [&_strong]:font-semibold"
+              />
             </div>
           </Card>
         )}
