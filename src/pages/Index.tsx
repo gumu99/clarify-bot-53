@@ -83,6 +83,42 @@ const Index = () => {
     }
   };
 
+  const stripHtmlAndFormat = (html: string): string => {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    let text = '';
+    const processNode = (node: Node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const content = node.textContent?.trim();
+        if (content) {
+          text += content + ' ';
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as HTMLElement;
+        
+        if (element.tagName === 'P' && element.style.color === 'rgb(34, 197, 94)') {
+          text += '\n\n' + element.textContent?.trim() + '\n';
+        } else if (element.tagName === 'DIV' || element.tagName === 'P') {
+          if (element.children.length === 0) {
+            text += element.textContent?.trim() + '\n';
+          }
+        } else if (element.tagName === 'UL' || element.tagName === 'OL') {
+          text += '\n';
+        } else if (element.tagName === 'LI') {
+          text += '• ' + element.textContent?.trim() + '\n';
+        } else if (element.tagName === 'STRONG') {
+          text += '\n' + element.textContent?.trim() + '\n';
+        }
+        
+        Array.from(element.childNodes).forEach(processNode);
+      }
+    };
+    
+    Array.from(temp.childNodes).forEach(processNode);
+    return text.trim().replace(/\n{3,}/g, '\n\n');
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 pt-8 pb-8 max-w-4xl">
@@ -159,7 +195,8 @@ const Index = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    navigator.clipboard.writeText(output);
+                    const cleanText = stripHtmlAndFormat(output);
+                    navigator.clipboard.writeText(cleanText);
                     toast.success("Copied to clipboard!");
                   }}
                 >
@@ -169,13 +206,13 @@ const Index = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => {
+                    const cleanText = stripHtmlAndFormat(output);
                     const pdf = new jsPDF();
                     const pageWidth = pdf.internal.pageSize.getWidth();
                     const margin = 15;
                     const maxWidth = pageWidth - 2 * margin;
                     
-                    // Split text into lines that fit the page width
-                    const lines = pdf.splitTextToSize(output, maxWidth);
+                    const lines = pdf.splitTextToSize(cleanText, maxWidth);
                     
                     let yPosition = 20;
                     const lineHeight = 7;
