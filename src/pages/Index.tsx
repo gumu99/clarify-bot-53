@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Loader2, Info } from "lucide-react";
+import { Loader2, Info, Heart } from "lucide-react";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
+import jsPDF from "jspdf";
 
 const Index = () => {
   const [input, setInput] = useState("");
@@ -87,12 +88,24 @@ const Index = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold">Professional Explainer AI</h1>
-          <Link to="/about">
-            <Button variant="outline" size="sm">
-              <Info className="w-4 h-4 mr-2" />
-              About
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                window.location.href = "upi://pay?pa=gumu642@okicici&pn=AI Notes Generator&cu=INR";
+              }}
+            >
+              <Heart className="w-4 h-4 mr-2" />
+              Donate
             </Button>
-          </Link>
+            <Link to="/about">
+              <Button variant="outline" size="sm">
+                <Info className="w-4 h-4 mr-2" />
+                About
+              </Button>
+            </Link>
+          </div>
         </div>
 
         <Card className="p-6 mb-6 bg-card border-border">
@@ -140,19 +153,32 @@ const Index = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    const blob = new Blob([output], { type: "text/markdown" });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = "explanation.md";
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                    toast.success("Downloaded successfully!");
+                    const pdf = new jsPDF();
+                    const pageWidth = pdf.internal.pageSize.getWidth();
+                    const margin = 15;
+                    const maxWidth = pageWidth - 2 * margin;
+                    
+                    // Split text into lines that fit the page width
+                    const lines = pdf.splitTextToSize(output, maxWidth);
+                    
+                    let yPosition = 20;
+                    const lineHeight = 7;
+                    const pageHeight = pdf.internal.pageSize.getHeight();
+                    
+                    lines.forEach((line: string) => {
+                      if (yPosition > pageHeight - 20) {
+                        pdf.addPage();
+                        yPosition = 20;
+                      }
+                      pdf.text(line, margin, yPosition);
+                      yPosition += lineHeight;
+                    });
+                    
+                    pdf.save("explanation.pdf");
+                    toast.success("Downloaded as PDF successfully!");
                   }}
                 >
-                  Download
+                  Download PDF
                 </Button>
               </div>
             </div>
