@@ -36,7 +36,7 @@ serve(async (req) => {
 
 Generate HTML with inline CSS styling for colors
 Questions MUST be in green color
-Answers MUST be in black color
+Answers MUST be in pink color
 Use clean, structured, professional formatting
 Medium-length answers (perfect for revision)
 
@@ -47,7 +47,7 @@ For each question-answer pair, use this format:
 <div style="margin-bottom: 24px;">
 <p style="color: #22c55e; font-weight: bold; font-size: 18px; margin-bottom: 12px;">Q: [Question text here]</p>
 
-<div style="color: #000000;">
+<div style="color: #ec4899;">
 
 <p style="margin-bottom: 8px;"><strong>1. Definition / Core Idea</strong></p>
 <p style="margin-bottom: 12px;">2-3 line clear definition.</p>
@@ -83,7 +83,7 @@ For each question-answer pair, use this format:
 🔥 COLOR RULES
 
 Questions: Use #22c55e (green) with bold, larger font
-Answers: Use #000000 (black) for all answer content
+Answers: Use #ec4899 (pink) for all answer content
 Section headings within answers: Use <strong> tags
 
 🔥 CONTENT GUIDELINES
