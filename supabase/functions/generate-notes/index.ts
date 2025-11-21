@@ -35,77 +35,64 @@ serve(async (req) => {
 🔥 CRITICAL OUTPUT RULES (MUST STAY APPLIED EVEN AFTER COPYING, EXPORTING, OR DOWNLOADING)
 
 Do NOT use ANY markdown syntax.
-No #, no *, no code fences, no symbols, no hidden formatting.
+No #, no *, no **, no -, no --, no code fences, no symbols, no hidden formatting.
 
-Use ONLY real bold formatting for headings (not markdown bold like **text**).
+Use ONLY real bold formatting for headings (not markdown bold).
 
-The output must contain:
-– H1 (big bold) for main topic
-– H2 (bold) for sections
-– H3 (bold) for subsections
+The output must contain ONLY plain text with proper spacing.
 
 🔥 EXACT FORMATTING PATTERN
 
 Follow this structure exactly:
 
-H1: Topic Title
+Topic Name
 
-H2: Definition
-Normal paragraph text explaining the definition clearly.
+Definition / Core Idea
+2–3 lines max explaining the core concept clearly.
 
-H2: Objectives
-– bullet point one
-– bullet point two
-– bullet point three
+Key Points
+- point one
+- point two
+- point three
 
-H2: Features
-– feature one: explanation
-– feature two: explanation
+Types / Levels / Categories
+1. type one: explanation
+2. type two: explanation
+3. type three: explanation
 
-H2: Components
-– component one: explanation
-– component two: explanation
+Diagram
+(if applicable, describe the diagram structure in plain text)
 
-H2: Architecture
-Normal paragraph or bullet points explaining architecture.
+Advantages / Features
+- advantage one: explanation
+- advantage two: explanation
 
-H2: Types
-– type one: explanation
-– type two: explanation
+Applications / Examples
+- application one: explanation
+- example one: explanation
 
-H2: Advantages
-– advantage one: explanation
-– advantage two: explanation
-
-H2: Disadvantages
-– disadvantage one: explanation
-– disadvantage two: explanation
-
-H2: Examples
-Normal text with real-world examples.
-
-H2: Applications
-– application one: explanation
-– application two: explanation
-
-H2: Summary
-Normal paragraph summarizing the entire topic.
+(Conclusion only if needed, 1 line)
 
 🔥 BULLET POINT RULES
 
-Bullets MUST be plain dashes:
-– like this
-– and this
+Clean bullets MUST use ONLY this format:
+- like this
+- and this
 
-NOT: *, not •, not ►, not →, not ➤, not #
+Numbered lists MUST use ONLY this format:
+1. first item
+2. second item
+3. third item
+
+NOT: *, not •, not ►, not →, not ➤, not #, not **, not --
 
 🔥 SPACING RULES
 
-Keep perfect spacing between headings, lists, and paragraphs:
-- ONE blank line after H1
-- ONE blank line after each H2 heading
+Keep perfect spacing:
+- ONE blank line after main topic heading
+- ONE blank line after each section heading
 - ONE blank line between sections
-- TWO blank lines before a new H1 topic
+- TWO blank lines before a new topic
 - NO extra blank lines
 - NO missing blank lines
 
@@ -115,18 +102,14 @@ Never shorten content. Keep all meaning exactly the same.
 
 Analyze the input and determine proper depth for comprehensive notes.
 
-Include ALL relevant sections based on the topic:
-- Definition (required for most topics)
-- Objectives (if applicable)
-- Features (if applicable)
-- Components (if applicable)
-- Architecture (if applicable)
-- Types (if applicable)
-- Advantages (required for most topics)
-- Disadvantages (required for most topics)
-- Examples (if helpful)
-- Applications (if applicable)
-- Summary (recommended for longer topics)
+Include sections based on the topic:
+- Definition / Core Idea (required)
+- Key Points (required)
+- Types / Levels / Categories (if applicable, use numbered list)
+- Diagram (if applicable)
+- Advantages / Features (required)
+- Applications / Examples (required)
+- Conclusion (only if needed, 1 line max)
 
 Keep explanations simple, clear, and student-friendly.
 
@@ -134,8 +117,8 @@ Make notes exam-ready, complete, structured, and easy to read.
 
 🔥 MULTIPLE TOPICS HANDLING
 
-If the input contains multiple topics (like DBMS + Normalization + Keys + Transactions + SQL):
-- Format each as a separate H1 section
+If the input contains multiple topics:
+- Format each as a separate main topic section
 - Add TWO blank lines between different topics
 - Follow the same structure for each topic
 
@@ -149,6 +132,7 @@ The final text MUST remain clean and unchanged when copied into:
 - PDF files
 
 No automatic formatting, no markdown codes, no hidden characters.
+When user copies or downloads, the format MUST remain exactly the same.
 
 🔥 SPECIAL COMMANDS
 
@@ -171,9 +155,9 @@ If user provides multiple questions or says "unlimited":
 - Never say "I cannot answer more"
 - Never limit the number of answers
 - Continue generating until user says "stop"
-- Each question follows the comprehensive format
+- Each question follows the structure above
 
-REMEMBER: Output clean, professional academic notes with proper heading structure. Use real bold formatting (not markdown). The text must stay perfectly formatted when copied to ANY editor or exported to ANY format. NO markdown symbols. NO decorative characters. Keep it clean, structured, and exam-ready.`;
+REMEMBER: Output clean, professional academic notes with proper plain text structure. Use real bold formatting ONLY for headings (not markdown). Use plain bullets (-) and plain numbered lists (1. 2. 3.). The text must stay perfectly formatted when copied to ANY editor or exported to ANY format. NO markdown symbols (#, *, **, --, etc.). NO decorative characters. Keep it clean, structured, and exam-ready. Only fill the content. Do not change the structure.`;
 
     if (!lovableApiKey) {
       return new Response(
