@@ -85,7 +85,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 pt-20 pb-8 max-w-4xl">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold">Professional Explainer AI</h1>
           <div className="flex gap-2">
@@ -110,7 +110,7 @@ const Index = () => {
           </div>
         </div>
 
-        <Card className="p-6 mb-6 bg-card border-border">
+        <Card className="p-6 mb-6 bg-card/50 border-border/50">
           <label className="block text-sm font-medium mb-2">
             Enter text, notes, or concepts to explain:
           </label>
@@ -118,7 +118,7 @@ const Index = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste your text, paragraphs, or concepts here..."
-            className="min-h-[200px] mb-4 bg-background border-border text-foreground"
+            className="min-h-[200px] mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-pink-600 text-white placeholder:text-pink-100 border-none rounded-lg"
           />
           <Button
             onClick={generateNotes}
