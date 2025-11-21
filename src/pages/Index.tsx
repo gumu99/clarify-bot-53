@@ -7,6 +7,7 @@ import { Loader2, Info, Heart } from "lucide-react";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
 import jsPDF from "jspdf";
+import logo from "@/assets/logo.png";
 
 const Index = () => {
   const [input, setInput] = useState("");
@@ -86,9 +87,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 pt-20 pb-8 max-w-4xl">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Professional Explainer AI</h1>
-          <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+          <img src={logo} alt="AI Logo" className="h-16 w-auto" />
+          <div className="flex gap-2 flex-wrap justify-center">
             <Button
               variant="outline"
               size="sm"
@@ -108,6 +109,20 @@ const Index = () => {
               </Button>
             </Link>
           </div>
+        </div>
+
+        <div className="text-center mb-6">
+          <p className="text-sm text-muted-foreground">
+            Try my other creations here:{" "}
+            <a 
+              href="https://whatsapp.com/channel/0029VbBa1Es2ER6mgaO0Am2V"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              WhatsApp Channel
+            </a>
+          </p>
         </div>
 
         <Card className="p-6 mb-6 bg-card/50 border-border/50">
@@ -138,9 +153,9 @@ const Index = () => {
 
         {output && (
           <Card className="p-6 bg-card border-border">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
               <h2 className="text-2xl font-bold">Generated Explanation</h2>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <Button
                   variant="outline"
                   size="sm"
