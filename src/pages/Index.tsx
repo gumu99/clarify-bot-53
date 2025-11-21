@@ -199,8 +199,23 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            <div className="prose prose-invert prose-sm max-w-none break-words whitespace-pre-wrap overflow-wrap-anywhere">
-              <ReactMarkdown>{output}</ReactMarkdown>
+            <div className="prose prose-invert max-w-none break-words">
+              <ReactMarkdown 
+                components={{
+                  h1: ({children}) => <h1 className="text-2xl font-bold mb-4 mt-6 text-foreground">{children}</h1>,
+                  h2: ({children}) => <h2 className="text-xl font-semibold mb-3 mt-5 text-foreground">{children}</h2>,
+                  h3: ({children}) => <h3 className="text-lg font-semibold mb-2 mt-4 text-foreground">{children}</h3>,
+                  p: ({children}) => <p className="mb-4 leading-relaxed text-foreground/90">{children}</p>,
+                  ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>,
+                  ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>,
+                  li: ({children}) => <li className="leading-relaxed text-foreground/90">{children}</li>,
+                  strong: ({children}) => <strong className="font-semibold text-foreground">{children}</strong>,
+                  em: ({children}) => <em className="italic text-foreground/90">{children}</em>,
+                  blockquote: ({children}) => <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-foreground/80">{children}</blockquote>,
+                }}
+              >
+                {output}
+              </ReactMarkdown>
             </div>
           </Card>
         )}
