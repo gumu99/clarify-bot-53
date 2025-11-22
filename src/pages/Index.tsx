@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 import { Loader2, Info, Heart } from "lucide-react";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import logo from "@/assets/logo.png";
 
 const Index = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const outputRef = useRef<HTMLDivElement>(null);
 
   const generateNotes = async () => {
     if (!input.trim()) {
@@ -187,7 +189,11 @@ const Index = () => {
         </Card>
 
         {output && (
-          <Card className="p-6 bg-card border-border">
+          <Card 
+            className={`p-6 bg-card border-border transition-all duration-300 ${
+              isLoading ? "animate-pulse shadow-[0_0_30px_rgba(168,85,247,0.5)]" : ""
+            }`}
+          >
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
               <h2 className="text-2xl font-bold">Generated Explanation</h2>
               <div className="flex gap-2 flex-wrap">
@@ -195,9 +201,11 @@ const Index = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    const cleanText = stripHtmlAndFormat(output);
-                    navigator.clipboard.writeText(cleanText);
-                    toast.success("Copied to clipboard!");
+                    if (outputRef.current) {
+                      const cleanText = outputRef.current.innerText;
+                      navigator.clipboard.writeText(cleanText);
+                      toast.success("Copied to clipboard!");
+                    }
                   }}
                 >
                   Copy
@@ -205,30 +213,32 @@ const Index = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    const cleanText = stripHtmlAndFormat(output);
-                    const pdf = new jsPDF();
-                    const pageWidth = pdf.internal.pageSize.getWidth();
-                    const margin = 15;
-                    const maxWidth = pageWidth - 2 * margin;
+                  onClick={async () => {
+                    if (!outputRef.current) return;
                     
-                    const lines = pdf.splitTextToSize(cleanText, maxWidth);
-                    
-                    let yPosition = 20;
-                    const lineHeight = 7;
-                    const pageHeight = pdf.internal.pageSize.getHeight();
-                    
-                    lines.forEach((line: string) => {
-                      if (yPosition > pageHeight - 20) {
-                        pdf.addPage();
-                        yPosition = 20;
-                      }
-                      pdf.text(line, margin, yPosition);
-                      yPosition += lineHeight;
-                    });
-                    
-                    pdf.save("explanation.pdf");
-                    toast.success("Downloaded as PDF successfully!");
+                    try {
+                      toast.info("Generating PDF...");
+                      
+                      const canvas = await html2canvas(outputRef.current, {
+                        backgroundColor: "#000000",
+                        scale: 2,
+                        logging: false,
+                      });
+                      
+                      const imgData = canvas.toDataURL("image/png");
+                      const pdf = new jsPDF({
+                        orientation: canvas.width > canvas.height ? "landscape" : "portrait",
+                        unit: "px",
+                        format: [canvas.width, canvas.height],
+                      });
+                      
+                      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+                      pdf.save("explanation.pdf");
+                      toast.success("Downloaded as PDF successfully!");
+                    } catch (error) {
+                      console.error("Error generating PDF:", error);
+                      toast.error("Failed to generate PDF");
+                    }
                   }}
                 >
                   Download PDF
@@ -237,6 +247,7 @@ const Index = () => {
             </div>
             <div className="prose prose-invert max-w-none break-words">
               <div 
+                ref={outputRef}
                 dangerouslySetInnerHTML={{ __html: output }}
                 className="[&_p]:mb-4 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-2 [&_strong]:font-semibold"
               />
