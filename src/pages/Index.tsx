@@ -13,7 +13,7 @@ const Index = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [mode, setMode] = useState<"topics" | "mcqs">("topics");
+  const [mode, setMode] = useState<"normal" | "topics" | "mcqs">("normal");
   const outputRef = useRef<HTMLDivElement>(null);
 
   const generateNotes = async () => {
@@ -176,6 +176,14 @@ const Index = () => {
               </label>
               <div className="flex gap-3 mb-4">
                 <Button
+                  onClick={() => setMode("normal")}
+                  variant={mode === "normal" ? "default" : "outline"}
+                  className="flex-1 transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
+                  disabled={isLoading}
+                >
+                  Normal Notes
+                </Button>
+                <Button
                   onClick={() => setMode("topics")}
                   variant={mode === "topics" ? "default" : "outline"}
                   className="flex-1 transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
@@ -215,7 +223,7 @@ const Index = () => {
                   Generating...
                 </>
               ) : (
-                `Generate ${mode === "topics" ? "Important Topics" : "MCQs"}`
+                `Generate ${mode === "normal" ? "Normal Notes" : mode === "topics" ? "Important Topics" : "MCQs"}`
               )}
             </Button>
           </div>
