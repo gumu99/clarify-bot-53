@@ -13,6 +13,7 @@ const Index = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [mode, setMode] = useState<"topics" | "mcqs">("topics");
   const outputRef = useRef<HTMLDivElement>(null);
 
   const generateNotes = async () => {
@@ -33,7 +34,7 @@ const Index = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
-          body: JSON.stringify({ input }),
+          body: JSON.stringify({ input, mode }),
         }
       );
 
@@ -135,12 +136,17 @@ const Index = () => {
                 window.open(upiUrl, '_blank');
                 toast.success("Opening payment app...");
               }}
+              className="transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
             >
               <Heart className="w-4 h-4 mr-2" />
               Donate
             </Button>
             <Link to="/about">
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
+              >
                 <Info className="w-4 h-4 mr-2" />
                 About
               </Button>
@@ -163,29 +169,56 @@ const Index = () => {
         </div>
 
         <Card className="p-6 mb-6 bg-card/50 border-border/50">
-          <label className="block text-sm font-medium mb-2">
-            Enter text, notes, or concepts to explain:
-          </label>
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste your text, paragraphs, or concepts here..."
-            className="min-h-[200px] mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-pink-600 text-white placeholder:text-pink-100 border-none rounded-lg"
-          />
-          <Button
-            onClick={generateNotes}
-            disabled={isLoading}
-            className="w-full"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Generating Explanation...
-              </>
-            ) : (
-              "Generate Professional Explanation"
-            )}
-          </Button>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-3">
+                Select Mode
+              </label>
+              <div className="flex gap-3 mb-4">
+                <Button
+                  onClick={() => setMode("topics")}
+                  variant={mode === "topics" ? "default" : "outline"}
+                  className="flex-1 transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
+                  disabled={isLoading}
+                >
+                  Important Topics
+                </Button>
+                <Button
+                  onClick={() => setMode("mcqs")}
+                  variant={mode === "mcqs" ? "default" : "outline"}
+                  className="flex-1 transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
+                  disabled={isLoading}
+                >
+                  MCQs Only
+                </Button>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Enter your study material
+              </label>
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Paste your topics, chapters, or any study material here..."
+                className="min-h-[200px] mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-pink-600 text-white placeholder:text-pink-100 border-none rounded-lg"
+              />
+            </div>
+            <Button
+              onClick={generateNotes}
+              disabled={isLoading}
+              className="w-full transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                `Generate ${mode === "topics" ? "Important Topics" : "MCQs"}`
+              )}
+            </Button>
+          </div>
         </Card>
 
         {output && (
@@ -207,6 +240,7 @@ const Index = () => {
                       toast.success("Copied to clipboard!");
                     }
                   }}
+                  className="transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
                 >
                   Copy
                 </Button>
@@ -240,11 +274,15 @@ const Index = () => {
                       toast.error("Failed to generate PDF");
                     }
                   }}
+                  className="transition-all duration-200 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:brightness-110 active:scale-95"
                 >
                   Download PDF
                 </Button>
               </div>
             </div>
+            <p className="text-xs text-muted-foreground italic">
+              ⚠️ PDF download works on PC only — may not work on mobile devices.
+            </p>
             <div className="prose prose-invert max-w-none break-words">
               <div 
                 ref={outputRef}
