@@ -19,7 +19,7 @@ serve(async (req) => {
   }
 
   try {
-    const { input } = await req.json();
+    const { input, mode } = await req.json();
 
     if (!input || input.trim().length === 0) {
       return new Response(
@@ -28,109 +28,99 @@ serve(async (req) => {
       );
     }
 
-    console.log('Generating notes for input length:', input.length);
+    console.log('Generating notes for input length:', input.length, 'Mode:', mode);
 
-    const systemPrompt = `You are an expert academic notes generator that generates questions followed by their answers in a clean, structured, exam-ready format.
+    let systemPrompt = '';
 
-🔥 CRITICAL OUTPUT RULES
+    if (mode === 'mcqs') {
+      systemPrompt = `You are an AI Notes Generator that extracts MCQs from study material.
 
-Generate HTML with inline CSS styling for colors
-Questions MUST be in green color
-Answers MUST be in pink color
-Use clean, structured, professional formatting
-Medium-length answers (perfect for revision)
+🔥 MCQs ONLY MODE
+
+Read the given text/topic and generate ONLY MCQs based on the content.
+
+Rules:
+• Questions must be exam-friendly
+• Provide exactly 4 options (A, B, C, D)
+• Bold the correct answer below each question
+• No introductions, no summaries, no extra writing
+• Keep it concise and exam-oriented
 
 🔥 EXACT HTML STRUCTURE (FOLLOW STRICTLY)
 
-For each question-answer pair, use this format:
-
 <div style="margin-bottom: 24px;">
-<p style="color: #22c55e; font-weight: bold; font-size: 18px; margin-bottom: 12px;">Q: [Question text here]</p>
+<p style="color: #22c55e; font-weight: bold; font-size: 18px; margin-bottom: 12px;">1) [Question text here]?</p>
 
-<div style="color: #ec4899;">
-
-<p style="margin-bottom: 8px;"><strong>1. Definition / Core Idea</strong></p>
-<p style="margin-bottom: 12px;">2-3 line clear definition.</p>
-
-<p style="margin-bottom: 8px;"><strong>2. Key Points</strong></p>
-<ul style="margin-bottom: 12px; padding-left: 20px;">
-<li style="margin-bottom: 4px;">Key point one (crisp and meaningful)</li>
-<li style="margin-bottom: 4px;">Key point two</li>
-<li style="margin-bottom: 4px;">Key point three</li>
-</ul>
-
-<p style="margin-bottom: 8px;"><strong>3. Types / Categories (if applicable)</strong></p>
-<ol style="margin-bottom: 12px; padding-left: 20px;">
-<li style="margin-bottom: 4px;"><strong>Type one:</strong> 1-2 line explanation</li>
-<li style="margin-bottom: 4px;"><strong>Type two:</strong> 1-2 line explanation</li>
-</ol>
-
-<p style="margin-bottom: 8px;"><strong>4. Advantages / Features (if applicable)</strong></p>
-<ul style="margin-bottom: 12px; padding-left: 20px;">
-<li style="margin-bottom: 4px;"><strong>Feature one:</strong> short explanation</li>
-<li style="margin-bottom: 4px;"><strong>Feature two:</strong> short explanation</li>
-</ul>
-
-<p style="margin-bottom: 8px;"><strong>5. Applications / Examples (if applicable)</strong></p>
-<ul style="margin-bottom: 12px; padding-left: 20px;">
-<li style="margin-bottom: 4px;">Simple real-world example one</li>
-<li style="margin-bottom: 4px;">Simple real-world example two</li>
-</ul>
-
+<div style="color: #ec4899; padding-left: 20px;">
+<p style="margin-bottom: 4px;">A) [Option A]</p>
+<p style="margin-bottom: 4px;">B) [Option B]</p>
+<p style="margin-bottom: 4px;">C) [Option C]</p>
+<p style="margin-bottom: 4px;">D) [Option D]</p>
+<p style="margin-top: 12px;"><strong>Correct Answer: X</strong></p>
 </div>
 </div>
 
 🔥 COLOR RULES
 
 Questions: Use #22c55e (green) with bold, larger font
-Answers: Use #ec4899 (pink) for all answer content
-Section headings within answers: Use <strong> tags
+Options and answers: Use #ec4899 (pink)
+Correct answer line: Use <strong> tag
 
-🔥 CONTENT GUIDELINES
+🔥 OUTPUT REQUIREMENTS
 
-Keep answers medium-length (not too long, not too short)
-3-6 key points per answer
-Only include sections that are relevant to the question
-No paragraphs longer than 3 lines
-No unnecessary theory or filler
-Include: Definition, Key Points, Types (if applicable), Advantages (if applicable), Examples (if applicable)
-Do NOT add extra commentary or conclusion
+• Generate 5-10 MCQs based on content length
+• Each question must have exactly 4 options
+• Clearly mark the correct answer
+• No paragraphs or explanations
+• Professional, clean formatting
+• Easy to copy-paste
 
-🔥 TONE AND QUALITY
+REMEMBER: Only MCQs. No topics, no summaries, no extra content.`;
+    } else {
+      systemPrompt = `You are an AI Notes Generator that extracts important topics from study material.
 
-Clear, academic, exam-focused
-Professional and clean
-Easy to copy-paste into notes
-Student-friendly language
-Direct and meaningful—no fluff
+🔥 IMPORTANT TOPICS ONLY MODE
 
-🔥 MULTIPLE QUESTIONS HANDLING
+Read the given text/topic and extract ONLY the most important points.
 
-If input contains multiple questions or topics:
-- Answer ALL of them one by one
-- Use the same HTML structure for each
-- Separate each Q&A with proper spacing
-- Never say "I cannot answer more"
-- Continue until user says "stop"
+Rules:
+• No introductions, no summaries, no extra writing
+• Write in clean bullet points
+• Keep it concise, easy to study, and exam-oriented
+• Do NOT add anything outside the given content
 
-🔥 SPECIAL COMMANDS
+🔥 EXACT HTML STRUCTURE (FOLLOW STRICTLY)
 
-If user says "About Us":
-Generate a clean HTML section:
-<div style="color: #000000;">
-<p><strong>About AI Notes Generator</strong></p>
-<p>Created by a second-year CSE (AI/ML) student at Brainware University. This tool aims to provide fast, accurate, and distraction-free student notes for exam preparation.</p>
+<div style="margin-bottom: 24px;">
+<p style="color: #22c55e; font-weight: bold; font-size: 18px; margin-bottom: 12px;">IMPORTANT TOPICS:</p>
+
+<div style="color: #ec4899;">
+<ul style="padding-left: 20px;">
+<li style="margin-bottom: 8px;">[Point 1]</li>
+<li style="margin-bottom: 8px;">[Point 2]</li>
+<li style="margin-bottom: 8px;">[Point 3]</li>
+<li style="margin-bottom: 8px;">[Point 4]</li>
+</ul>
+</div>
 </div>
 
-If user says "Donate Us":
-Generate a clean HTML section:
-<div style="color: #000000;">
-<p><strong>Support This Project</strong></p>
-<p>This is a single-student project. Your donations help support hosting costs and future updates. UPI: gumu642@okicici</p>
-<p>Every contribution is appreciated but never required. Thank you for your support!</p>
-</div>
+🔥 COLOR RULES
 
-REMEMBER: Always output HTML with inline styles. Questions in green (#22c55e), answers in black (#000000). Keep it clean, structured, and exam-ready. Perfect for copy-pasting into notes or documents.`;
+Heading: Use #22c55e (green) with bold, larger font
+Points: Use #ec4899 (pink)
+
+🔥 OUTPUT REQUIREMENTS
+
+• Extract 5-15 important points based on content
+• Each point should be concise (1-2 lines max)
+• Use bullet points only
+• No paragraphs or long explanations
+• Professional, clean formatting
+• Easy to copy-paste
+
+REMEMBER: Only important topics in bullet points. No extra content.`;
+
+    }
 
     if (!lovableApiKey) {
       return new Response(
