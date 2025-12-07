@@ -25,11 +25,9 @@ const Header: React.FC = () => {
         <span className="inline-block mx-2 text-neon-pink">Builder</span>
       </p>
       
-      {/* Decorative line */}
-      <div className="relative mt-8 flex items-center justify-center gap-4">
-        <div className="h-px w-16 md:w-32 bg-gradient-to-r from-transparent via-neon-purple to-transparent" />
-        <div className="w-2 h-2 rounded-full bg-neon-purple animate-glow-pulse" />
-        <div className="h-px w-16 md:w-32 bg-gradient-to-r from-transparent via-neon-purple to-transparent" />
+      {/* Decorative dot */}
+      <div className="relative mt-6 flex items-center justify-center">
+        <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
       </div>
     </header>
   );
