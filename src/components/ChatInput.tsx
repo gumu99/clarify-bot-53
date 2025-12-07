@@ -61,8 +61,8 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40">
-      {/* Bottom blur gradient */}
-      <div className="blur-gradient-bottom absolute inset-0 h-40 -top-20 pointer-events-none" />
+      {/* Small blur gradient above input */}
+      <div className="absolute left-0 right-0 h-16 -top-16 bg-gradient-to-t from-background to-transparent pointer-events-none" />
       
       <div className="relative px-4 pb-6 pt-2">
         <div className="max-w-3xl mx-auto">
