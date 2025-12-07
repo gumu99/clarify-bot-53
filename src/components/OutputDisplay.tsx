@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Copy, Download, Check } from 'lucide-react';
+import { Copy, Download, Check, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
@@ -39,13 +39,13 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
     const contentWidth = pageWidth - 2 * margin;
 
     // Black background
-    pdf.setFillColor(13, 13, 13);
+    pdf.setFillColor(5, 5, 5);
     pdf.rect(0, 0, pageWidth, pageHeight, 'F');
 
     let y = margin;
 
     // Title
-    pdf.setTextColor(0, 255, 128); // Neon green
+    pdf.setTextColor(0, 255, 128);
     pdf.setFontSize(18);
     pdf.setFont('helvetica', 'bold');
     pdf.text('AI NOTES GENERATOR', pageWidth / 2, y, { align: 'center' });
@@ -62,22 +62,21 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
     for (const line of lines) {
       if (y > pageHeight - margin - 15) {
         pdf.addPage();
-        pdf.setFillColor(13, 13, 13);
+        pdf.setFillColor(5, 5, 5);
         pdf.rect(0, 0, pageWidth, pageHeight, 'F');
         y = margin;
       }
 
-      // Check for headers
       if (line.startsWith('# ') || line.match(/^[A-Z\s]+:$/)) {
-        pdf.setTextColor(0, 255, 128); // Neon green for headers
+        pdf.setTextColor(0, 255, 128);
         pdf.setFontSize(14);
         pdf.setFont('helvetica', 'bold');
       } else if (line.startsWith('## ') || line.match(/^\*\*.*\*\*$/)) {
-        pdf.setTextColor(255, 105, 180); // Neon pink for subheaders
+        pdf.setTextColor(255, 105, 180);
         pdf.setFontSize(12);
         pdf.setFont('helvetica', 'bold');
       } else if (line.startsWith('### ')) {
-        pdf.setTextColor(187, 134, 252); // Neon purple for h3
+        pdf.setTextColor(187, 134, 252);
         pdf.setFontSize(11);
         pdf.setFont('helvetica', 'bold');
       } else {
@@ -92,7 +91,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
       for (const wrappedLine of wrappedLines) {
         if (y > pageHeight - margin - 15) {
           pdf.addPage();
-          pdf.setFillColor(13, 13, 13);
+          pdf.setFillColor(5, 5, 5);
           pdf.rect(0, 0, pageWidth, pageHeight, 'F');
           y = margin;
         }
@@ -105,7 +104,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
     const footerY = pageHeight - 8;
     pdf.setTextColor(187, 134, 252);
     pdf.setFontSize(8);
-    pdf.text('Made with note-genesis-pro.lovable.app', pageWidth / 2, footerY, { align: 'center' });
+    pdf.text('Made with AI Notes Generator', pageWidth / 2, footerY, { align: 'center' });
 
     pdf.save('ai-notes.pdf');
     toast.success('PDF downloaded!');
@@ -113,25 +112,35 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
 
   if (!output && !isLoading) {
     return (
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="text-center text-muted-foreground">
-          <p className="text-lg mb-2">Enter a topic to generate notes</p>
-          <p className="text-sm">Choose a mode using the + button</p>
+      <div className="flex-1 flex items-center justify-center p-8 min-h-[50vh]">
+        <div className="text-center space-y-4 animate-fade-in">
+          <div className="relative inline-block">
+            <div 
+              className="absolute inset-0 blur-2xl"
+              style={{
+                background: 'radial-gradient(circle, hsl(var(--neon-purple) / 0.3) 0%, transparent 70%)',
+              }}
+            />
+            <Sparkles className="w-12 h-12 text-neon-purple relative animate-float" />
+          </div>
+          <p className="text-lg text-muted-foreground">Enter a topic to generate notes</p>
+          <p className="text-sm text-muted-foreground/60">Choose a mode using the + button</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 overflow-auto px-4 pb-40 pt-4">
-      <div className="max-w-3xl mx-auto">
+    <div className="flex-1 overflow-auto px-4 pb-48 pt-4">
+      <div className="max-w-3xl mx-auto animate-fade-in">
+        {/* Action Buttons */}
         {output && (
-          <div className="flex gap-2 mb-4 justify-end">
+          <div className="flex gap-3 mb-6 justify-end">
             <Button
               variant="outline"
               size="sm"
               onClick={handleCopy}
-              className="btn-neon border-border hover:bg-muted"
+              className="btn-neon glass border-border/50 hover:bg-muted/50 rounded-xl px-4"
             >
               {copied ? (
                 <Check className="w-4 h-4 mr-2 text-neon-green" />
@@ -144,7 +153,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
               variant="outline"
               size="sm"
               onClick={handleDownloadPDF}
-              className="btn-neon border-border hover:bg-muted"
+              className="btn-neon glass border-border/50 hover:bg-muted/50 rounded-xl px-4"
             >
               <Download className="w-4 h-4 mr-2" />
               PDF
@@ -152,17 +161,34 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
           </div>
         )}
 
+        {/* Output Container */}
         <div
           ref={outputRef}
-          className={`notes-output rounded-xl p-6 bg-card/50 border ${
-            isLoading ? 'border-neon-purple animate-border-glow' : 'border-border'
+          className={`notes-output glass rounded-2xl p-6 md:p-8 transition-all duration-300 ${
+            isLoading 
+              ? 'animate-border-glow border-2 border-neon-purple/50' 
+              : 'border border-border/50'
           }`}
-          dangerouslySetInnerHTML={{ __html: output || '' }}
-        />
+        >
+          {isLoading && !output && (
+            <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex gap-1">
+                <span className="w-2 h-2 rounded-full bg-neon-purple animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-neon-purple animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-neon-purple animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+              <span>Generating...</span>
+            </div>
+          )}
+          <div dangerouslySetInnerHTML={{ __html: output || '' }} />
+          {isLoading && output && (
+            <span className="typing-indicator" />
+          )}
+        </div>
 
         {output && (
-          <p className="text-xs text-muted-foreground text-center mt-4">
-            PDF download works on PC only — may not work on mobile devices.
+          <p className="text-xs text-muted-foreground/50 text-center mt-6">
+            PDF download works on PC only
           </p>
         )}
       </div>
