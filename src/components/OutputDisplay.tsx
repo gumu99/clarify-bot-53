@@ -39,20 +39,20 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
     const contentWidth = pageWidth - 2 * margin;
 
     // Black background
-    pdf.setFillColor(5, 5, 5);
+    pdf.setFillColor(0, 0, 0);
     pdf.rect(0, 0, pageWidth, pageHeight, 'F');
 
     let y = margin;
 
     // Title
-    pdf.setTextColor(0, 255, 128);
+    pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(18);
     pdf.setFont('helvetica', 'bold');
     pdf.text('AI NOTES GENERATOR', pageWidth / 2, y, { align: 'center' });
     y += 12;
 
     // Content
-    pdf.setTextColor(255, 255, 255);
+    pdf.setTextColor(220, 220, 220);
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'normal');
 
@@ -62,25 +62,25 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
     for (const line of lines) {
       if (y > pageHeight - margin - 15) {
         pdf.addPage();
-        pdf.setFillColor(5, 5, 5);
+        pdf.setFillColor(0, 0, 0);
         pdf.rect(0, 0, pageWidth, pageHeight, 'F');
         y = margin;
       }
 
       if (line.startsWith('# ') || line.match(/^[A-Z\s]+:$/)) {
-        pdf.setTextColor(0, 255, 128);
+        pdf.setTextColor(255, 255, 255);
         pdf.setFontSize(14);
         pdf.setFont('helvetica', 'bold');
       } else if (line.startsWith('## ') || line.match(/^\*\*.*\*\*$/)) {
-        pdf.setTextColor(255, 105, 180);
+        pdf.setTextColor(255, 255, 255);
         pdf.setFontSize(12);
         pdf.setFont('helvetica', 'bold');
       } else if (line.startsWith('### ')) {
-        pdf.setTextColor(187, 134, 252);
+        pdf.setTextColor(240, 240, 240);
         pdf.setFontSize(11);
         pdf.setFont('helvetica', 'bold');
       } else {
-        pdf.setTextColor(255, 255, 255);
+        pdf.setTextColor(220, 220, 220);
         pdf.setFontSize(11);
         pdf.setFont('helvetica', 'normal');
       }
@@ -91,7 +91,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
       for (const wrappedLine of wrappedLines) {
         if (y > pageHeight - margin - 15) {
           pdf.addPage();
-          pdf.setFillColor(5, 5, 5);
+          pdf.setFillColor(0, 0, 0);
           pdf.rect(0, 0, pageWidth, pageHeight, 'F');
           y = margin;
         }
@@ -102,7 +102,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
 
     // Footer
     const footerY = pageHeight - 8;
-    pdf.setTextColor(187, 134, 252);
+    pdf.setTextColor(150, 150, 150);
     pdf.setFontSize(8);
     pdf.text('Made with AI Notes Generator', pageWidth / 2, footerY, { align: 'center' });
 
@@ -114,15 +114,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
     return (
       <div className="flex-1 flex items-center justify-center p-8 min-h-[50vh]">
         <div className="text-center space-y-4 animate-fade-in">
-          <div className="relative inline-block">
-            <div 
-              className="absolute inset-0 blur-2xl"
-              style={{
-                background: 'radial-gradient(circle, hsl(var(--neon-purple) / 0.3) 0%, transparent 70%)',
-              }}
-            />
-            <Sparkles className="w-12 h-12 text-neon-purple relative animate-float" />
-          </div>
+          <Sparkles className="w-12 h-12 text-muted-foreground mx-auto animate-float" />
           <p className="text-lg text-muted-foreground">Enter a topic to generate notes</p>
           <p className="text-sm text-muted-foreground/60">Choose a mode using the + button</p>
         </div>
@@ -140,10 +132,10 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
               variant="outline"
               size="sm"
               onClick={handleCopy}
-              className="btn-neon glass border-border/50 hover:bg-muted/50 rounded-xl px-4"
+              className="btn-neon border-border hover:bg-muted rounded-xl px-4"
             >
               {copied ? (
-                <Check className="w-4 h-4 mr-2 text-neon-green" />
+                <Check className="w-4 h-4 mr-2 text-gpt-blue" />
               ) : (
                 <Copy className="w-4 h-4 mr-2" />
               )}
@@ -153,7 +145,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
               variant="outline"
               size="sm"
               onClick={handleDownloadPDF}
-              className="btn-neon glass border-border/50 hover:bg-muted/50 rounded-xl px-4"
+              className="btn-neon border-border hover:bg-muted rounded-xl px-4"
             >
               <Download className="w-4 h-4 mr-2" />
               PDF
@@ -161,21 +153,21 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
           </div>
         )}
 
-        {/* Output Container */}
+        {/* Output Container - Pure black background */}
         <div
           ref={outputRef}
-          className={`notes-output glass rounded-2xl p-6 md:p-8 transition-all duration-300 ${
+          className={`notes-output rounded-2xl p-6 md:p-8 transition-all duration-300 border ${
             isLoading 
-              ? 'animate-border-glow border-2 border-neon-purple/50' 
-              : 'border border-border/50'
+              ? 'animate-border-glow border-gpt-blue/50' 
+              : 'border-border'
           }`}
         >
           {isLoading && !output && (
             <div className="flex items-center gap-3 text-muted-foreground">
               <div className="flex gap-1">
-                <span className="w-2 h-2 rounded-full bg-neon-purple animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-2 h-2 rounded-full bg-neon-purple animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-2 h-2 rounded-full bg-neon-purple animate-bounce" style={{ animationDelay: '300ms' }} />
+                <span className="w-2 h-2 rounded-full bg-gpt-blue animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-gpt-blue animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-gpt-blue animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
               <span>Generating...</span>
             </div>

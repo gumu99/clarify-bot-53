@@ -60,8 +60,9 @@ export default {
           green: "hsl(var(--neon-green))",
           purple: "hsl(var(--neon-purple))",
           pink: "hsl(var(--neon-pink))",
-          blue: "hsl(var(--neon-blue))",
-          cyan: "hsl(var(--neon-cyan))",
+        },
+        gpt: {
+          blue: "hsl(var(--gpt-blue))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -102,10 +103,6 @@ export default {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
-        "shimmer": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -113,14 +110,6 @@ export default {
         "fade-in": "fade-in 0.4s ease-out",
         "slide-up": "slide-up 0.5s ease-out",
         "scale-in": "scale-in 0.3s ease-out",
-        "shimmer": "shimmer 2s linear infinite",
-      },
-      boxShadow: {
-        'neon-sm': '0 0 10px hsl(var(--neon-purple) / 0.3)',
-        'neon-md': '0 0 20px hsl(var(--neon-purple) / 0.4)',
-        'neon-lg': '0 0 40px hsl(var(--neon-purple) / 0.5)',
-        'neon-green': '0 0 20px hsl(var(--neon-green) / 0.4)',
-        'neon-pink': '0 0 20px hsl(var(--neon-pink) / 0.4)',
       },
     },
   },

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Plus, Send, Upload, Loader2, Sparkles } from 'lucide-react';
+import { Plus, Send, Upload, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import ModePopup, { GenerationMode } from './ModePopup';
@@ -59,13 +59,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
     summarise: 'Summary',
   };
 
-  const modeColors: Record<GenerationMode, string> = {
-    normal: 'text-neon-green',
-    important: 'text-neon-pink',
-    mcqs: 'text-neon-purple',
-    summarise: 'text-neon-cyan',
-  };
-
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40">
       {/* Bottom blur gradient */}
@@ -75,9 +68,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         <div className="max-w-3xl mx-auto">
           {/* Input Container */}
           <div 
-            className={`input-glow glass-strong rounded-2xl p-2 transition-all duration-300 ${
-              isLoading ? 'animate-border-glow' : ''
-            }`}
+            className={`input-glow rounded-2xl p-2 transition-all duration-300 bg-card border border-border`}
           >
             <div className="flex items-end gap-2">
               {/* Mode Select Button */}
@@ -88,7 +79,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
                   className="btn-neon shrink-0 rounded-xl h-11 w-11 bg-muted/50 hover:bg-muted border border-border/50"
                   title="Select mode"
                 >
-                  <Plus className="w-5 h-5 text-neon-purple" />
+                  <Plus className="w-5 h-5 text-foreground" />
                 </Button>
               </ModePopup>
 
@@ -111,9 +102,9 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 title="Upload file"
               >
                 {isExtracting ? (
-                  <Loader2 className="w-5 h-5 text-neon-purple animate-spin" />
+                  <Loader2 className="w-5 h-5 text-gpt-blue animate-spin" />
                 ) : (
-                  <Upload className="w-5 h-5 text-neon-green" />
+                  <Upload className="w-5 h-5 text-foreground" />
                 )}
               </Button>
 
@@ -130,11 +121,11 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button - GPT Blue Style */}
               <Button
                 onClick={onSubmit}
                 disabled={isLoading || isExtracting || !input.trim()}
-                className="btn-neon shrink-0 rounded-xl h-11 w-11 bg-gradient-to-r from-neon-purple to-neon-pink hover:opacity-90 text-white border-0"
+                className="btn-gpt-blue shrink-0 rounded-full h-11 w-11 border-0"
                 size="icon"
               >
                 {isLoading ? (
@@ -148,9 +139,8 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
           {/* Mode Indicator */}
           <div className="flex items-center justify-center gap-2 mt-3">
-            <Sparkles className={`w-3 h-3 ${modeColors[mode]}`} />
             <span className="text-xs text-muted-foreground">
-              Mode: <span className={modeColors[mode]}>{modeLabels[mode]}</span>
+              Mode: <span className="text-foreground">{modeLabels[mode]}</span>
             </span>
           </div>
         </div>
