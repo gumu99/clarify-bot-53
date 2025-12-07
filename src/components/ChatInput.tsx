@@ -121,19 +121,18 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 />
               </div>
 
-              {/* Submit Button - Small subtle style */}
-              <Button
+              {/* Submit Button - Tiny */}
+              <button
                 onClick={onSubmit}
                 disabled={isLoading || isExtracting || !input.trim()}
-                className="shrink-0 rounded-full h-8 w-8 bg-muted hover:bg-muted-foreground/20 border-0 transition-all"
-                size="icon"
+                className="shrink-0 rounded-full h-5 w-5 bg-gpt-blue hover:bg-gpt-blue/80 disabled:bg-muted disabled:opacity-50 flex items-center justify-center transition-all"
               >
                 {isLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-foreground" />
+                  <Loader2 className="w-2.5 h-2.5 animate-spin text-white" />
                 ) : (
-                  <Send className="w-4 h-4 text-foreground" />
+                  <Send className="w-2.5 h-2.5 text-white" />
                 )}
-              </Button>
+              </button>
             </div>
           </div>
 
