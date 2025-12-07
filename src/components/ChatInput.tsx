@@ -121,17 +121,17 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 />
               </div>
 
-              {/* Submit Button - GPT Blue Style */}
+              {/* Submit Button - Small subtle style */}
               <Button
                 onClick={onSubmit}
                 disabled={isLoading || isExtracting || !input.trim()}
-                className="btn-gpt-blue shrink-0 rounded-full h-11 w-11 border-0"
+                className="shrink-0 rounded-full h-8 w-8 bg-muted hover:bg-muted-foreground/20 border-0 transition-all"
                 size="icon"
               >
                 {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="w-4 h-4 animate-spin text-foreground" />
                 ) : (
-                  <Send className="w-5 h-5" />
+                  <Send className="w-4 h-4 text-foreground" />
                 )}
               </Button>
             </div>
