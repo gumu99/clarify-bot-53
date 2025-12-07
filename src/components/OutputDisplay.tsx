@@ -123,11 +123,10 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
   }
 
   return (
-    <div className="flex-1 overflow-auto px-2 md:px-4 pb-48 pt-4">
-      <div className="max-w-3xl mx-auto animate-fade-in">
-        {/* Action Buttons */}
+    <div className="flex-1 overflow-auto px-0 md:px-4 pb-48 pt-4">
+      <div className="w-full md:max-w-3xl md:mx-auto animate-fade-in">
         {output && (
-          <div className="flex gap-3 mb-6 justify-end">
+          <div className="flex gap-3 mb-4 justify-end px-4 md:px-0">
             <Button
               variant="outline"
               size="sm"
@@ -153,10 +152,10 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
           </div>
         )}
 
-        {/* Output Container - Pure black background, no border */}
+        {/* Output Container - Full width on mobile */}
         <div
           ref={outputRef}
-          className={`notes-output rounded-none md:rounded-2xl p-4 md:p-8 transition-all duration-300 ${
+          className={`notes-output p-4 md:p-8 md:rounded-2xl transition-all duration-300 ${
             isLoading 
               ? 'animate-border-glow' 
               : ''
