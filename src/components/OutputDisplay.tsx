@@ -123,7 +123,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
   }
 
   return (
-    <div className="flex-1 overflow-auto px-4 pb-48 pt-4">
+    <div className="flex-1 overflow-auto px-2 md:px-4 pb-48 pt-4">
       <div className="max-w-3xl mx-auto animate-fade-in">
         {/* Action Buttons */}
         {output && (
@@ -153,13 +153,13 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
           </div>
         )}
 
-        {/* Output Container - Pure black background */}
+        {/* Output Container - Pure black background, no border */}
         <div
           ref={outputRef}
-          className={`notes-output rounded-2xl p-6 md:p-8 transition-all duration-300 border ${
+          className={`notes-output rounded-none md:rounded-2xl p-4 md:p-8 transition-all duration-300 ${
             isLoading 
-              ? 'animate-border-glow border-gpt-blue/50' 
-              : 'border-border'
+              ? 'animate-border-glow' 
+              : ''
           }`}
         >
           {isLoading && !output && (
