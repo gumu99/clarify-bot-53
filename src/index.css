@@ -2,41 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
-
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 15%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 95% 45%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 270 100% 75%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 330 90% 65%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 0 0% 100%;
-
-    --radius: 0.5rem;
+    --ring: 270 100% 75%;
+    --radius: 0.75rem;
+    
+    --neon-green: 140 100% 55%;
+    --neon-purple: 270 100% 75%;
+    --neon-pink: 330 100% 75%;
+    --neon-blue: 210 100% 60%;
 
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 90%;
@@ -49,33 +41,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
-
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 15%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 95% 45%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 270 100% 75%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 330 90% 65%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 0 0% 100%;
+    --ring: 270 100% 75%;
+
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 90%;
     --sidebar-primary: 0 0% 100%;
@@ -91,8 +76,134 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px hsl(var(--neon-purple)),
+                0 0 10px hsl(var(--neon-purple)),
+                0 0 20px hsl(var(--neon-purple) / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px hsl(var(--neon-purple)),
+                0 0 20px hsl(var(--neon-purple)),
+                0 0 40px hsl(var(--neon-purple) / 0.5);
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    border-color: hsl(var(--neon-purple) / 0.5);
+    box-shadow: 0 0 10px hsl(var(--neon-purple) / 0.3);
+  }
+  50% {
+    border-color: hsl(var(--neon-purple));
+    box-shadow: 0 0 20px hsl(var(--neon-purple) / 0.5);
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--neon-green)), hsl(var(--neon-purple)), hsl(var(--neon-pink)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.blur-gradient-top {
+  background: linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 100%);
+}
+
+.blur-gradient-bottom {
+  background: linear-gradient(to top, hsl(var(--background)) 0%, transparent 100%);
+}
+
+.notes-output h1 {
+  @apply text-2xl font-bold mb-4 mt-6;
+  color: hsl(var(--neon-green));
+}
+
+.notes-output h2 {
+  @apply text-xl font-semibold mb-3 mt-5;
+  color: hsl(var(--neon-pink));
+}
+
+.notes-output h3 {
+  @apply text-lg font-medium mb-2 mt-4;
+  color: hsl(var(--neon-purple));
+}
+
+.notes-output p {
+  @apply mb-3 leading-relaxed;
+}
+
+.notes-output ul, .notes-output ol {
+  @apply ml-6 mb-4 space-y-2;
+}
+
+.notes-output li {
+  @apply leading-relaxed;
+}
+
+.notes-output strong {
+  color: hsl(var(--neon-pink));
+  font-weight: 600;
+}
+
+.notes-output code {
+  @apply px-1.5 py-0.5 rounded text-sm;
+  background: hsl(var(--muted));
+  color: hsl(var(--neon-green));
+}
+
+.notes-output pre {
+  @apply p-4 rounded-lg mb-4 overflow-x-auto;
+  background: hsl(var(--muted));
+}
+
+.notes-output blockquote {
+  @apply pl-4 border-l-4 italic my-4;
+  border-color: hsl(var(--neon-purple));
+  color: hsl(var(--muted-foreground));
+}
+
+.btn-neon {
+  @apply transition-all duration-200;
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 15px hsl(var(--neon-purple) / 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-neon:active {
+  transform: scale(0.95);
 }
