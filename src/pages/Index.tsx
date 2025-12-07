@@ -10,8 +10,7 @@ const Index: React.FC = () => {
       {/* Background Effects */}
       <BackgroundEffects />
       
-      {/* Top Blur Gradient */}
-      <div className="blur-gradient-top fixed top-0 left-0 right-0 h-32 z-30 pointer-events-none" />
+      {/* Floating Header Buttons */}
       
       {/* Floating Header Buttons */}
       <FloatingHeader />
