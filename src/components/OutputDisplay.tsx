@@ -156,12 +156,15 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
         {/* Output Container - Pure black background */}
         <div
           ref={outputRef}
-          className={`notes-output rounded-2xl p-6 md:p-8 transition-all duration-300 bg-black border-0 ${
-            isLoading 
-              ? 'animate-border-glow' 
-              : 'border-none'
+          className={`notes-output rounded-2xl p-6 md:p-8 transition-all duration-300 ${
+            isLoading ? 'animate-border-glow' : ''
           }`}
-          style={{ backgroundColor: '#000000', border: 'none' }}
+          style={{ 
+            backgroundColor: '#000000', 
+            border: 'none',
+            outline: 'none',
+            boxShadow: isLoading ? undefined : 'none'
+          }}
         >
           {isLoading && !output && (
             <div className="flex items-center gap-3 text-muted-foreground">
