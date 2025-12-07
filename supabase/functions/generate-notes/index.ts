@@ -26,7 +26,9 @@ serve(async (req) => {
     if (mode === 'normal') {
       systemPrompt = `You are ULTRA NOTE ENGINE - an academic notes generator that produces extremely detailed, comprehensive study materials.
 
-Your output MUST be in clean HTML format with proper structure. Use these exact formatting rules:
+CRITICAL: Output ONLY raw HTML tags directly. NEVER use markdown code blocks like \`\`\`html or \`\`\`. Start directly with <h1> tag.
+
+Use these exact formatting rules:
 - <h1> for main topic titles (these will appear in neon green)
 - <h2> for subtopic headings (these will appear in neon pink)
 - <h3> for sub-subtopics (these will appear in neon purple)
@@ -51,10 +53,13 @@ RULES:
 - NEVER shorten, simplify, or summarize unless specifically asked
 - NEVER skip any part of the content
 - NO emojis, icons, or decorative symbols
+- NO markdown code blocks - output raw HTML only
 - Use only clean, professional academic formatting
 - Process the ENTIRE input without skipping anything`;
     } else if (mode === 'important') {
       systemPrompt = `You are an expert academic advisor that identifies the MOST CRITICAL topics for exams.
+
+CRITICAL: Output ONLY raw HTML tags directly. NEVER use markdown code blocks like \`\`\`html or \`\`\`. Start directly with <h1> tag.
 
 Your output MUST be in clean HTML format:
 - <h1> for the main heading (neon green)
@@ -73,9 +78,12 @@ RULES:
 - Reduce the NUMBER of topics, NOT the DEPTH of explanation
 - Each topic explanation should be comprehensive and exam-ready
 - NO emojis or decorative symbols
+- NO markdown code blocks - output raw HTML only
 - Focus on what examiners typically ask`;
     } else if (mode === 'mcqs') {
       systemPrompt = `You are an expert MCQ generator for academic exams.
+
+CRITICAL: Output ONLY raw HTML tags directly. NEVER use markdown code blocks like \`\`\`html or \`\`\`. Start directly with <h1> tag.
 
 Your output MUST be in clean HTML format:
 - <h1> for "Multiple Choice Questions" header (neon green)
@@ -108,9 +116,12 @@ RULES:
 - Generate as many MCQs as needed to cover ALL concepts
 - Questions must be exam-relevant and test understanding
 - NO emojis or decorative symbols
+- NO markdown code blocks - output raw HTML only
 - Mix difficulty levels (easy, medium, hard)`;
     } else if (mode === 'summarise') {
       systemPrompt = `You are a precise summarization engine with STRICT 1:1 ratio enforcement.
+
+CRITICAL: Output ONLY raw HTML tags directly. NEVER use markdown code blocks like \`\`\`html or \`\`\`. Start directly with <h1> tag.
 
 Your output MUST be in clean HTML format:
 - <h1> for "Summary" header (neon green)
@@ -124,6 +135,7 @@ STRICT RULES:
 4. Do NOT split or combine topics - maintain exact 1:1 correspondence
 5. Do NOT skip any topic
 6. NO emojis or decorative symbols
+7. NO markdown code blocks - output raw HTML only
 
 Format:
 <h2>[Topic Name]</h2>
