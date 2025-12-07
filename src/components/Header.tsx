@@ -12,7 +12,12 @@ const Header: React.FC = () => {
       />
       
       {/* Main Title */}
-      <h1 className="relative text-4xl md:text-6xl lg:text-7xl font-bold gradient-text mb-4 animate-text-flicker tracking-tight">
+      <h1 
+        className="relative text-4xl md:text-6xl lg:text-7xl font-bold gradient-text mb-4 animate-text-flicker tracking-tight"
+        style={{
+          textShadow: '0 0 20px hsl(270 100% 75% / 0.4), 0 0 40px hsl(270 100% 75% / 0.2)'
+        }}
+      >
         AI NOTES GENERATOR
       </h1>
       
