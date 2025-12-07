@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Plus, Send, Upload, Loader2 } from 'lucide-react';
+import { Plus, Send, Upload, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import ModePopup, { GenerationMode } from './ModePopup';
@@ -59,75 +59,100 @@ const ChatInput: React.FC<ChatInputProps> = ({
     summarise: 'Summary',
   };
 
+  const modeColors: Record<GenerationMode, string> = {
+    normal: 'text-neon-green',
+    important: 'text-neon-pink',
+    mcqs: 'text-neon-purple',
+    summarise: 'text-neon-cyan',
+  };
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 z-40">
-      <div className="blur-gradient-bottom absolute inset-0 h-32 pointer-events-none" />
-      <div className="max-w-3xl mx-auto relative">
-        <div className="flex items-end gap-2 p-3 rounded-2xl bg-card/95 backdrop-blur-sm border border-border shadow-lg">
-          <ModePopup mode={mode} onModeChange={onModeChange}>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="btn-neon shrink-0 rounded-full hover:bg-muted"
-              title="Select mode"
-            >
-              <Plus className="w-5 h-5 text-neon-purple" />
-            </Button>
-          </ModePopup>
-
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".pdf,image/*"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-          
-          <Button
-            variant="ghost"
-            size="icon"
-            className="btn-neon shrink-0 rounded-full hover:bg-muted"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isExtracting}
-            title="Upload file"
+    <div className="fixed bottom-0 left-0 right-0 z-40">
+      {/* Bottom blur gradient */}
+      <div className="blur-gradient-bottom absolute inset-0 h-40 -top-20 pointer-events-none" />
+      
+      <div className="relative px-4 pb-6 pt-2">
+        <div className="max-w-3xl mx-auto">
+          {/* Input Container */}
+          <div 
+            className={`input-glow glass-strong rounded-2xl p-2 transition-all duration-300 ${
+              isLoading ? 'animate-border-glow' : ''
+            }`}
           >
-            {isExtracting ? (
-              <Loader2 className="w-5 h-5 text-neon-purple animate-spin" />
-            ) : (
-              <Upload className="w-5 h-5 text-neon-green" />
-            )}
-          </Button>
+            <div className="flex items-end gap-2">
+              {/* Mode Select Button */}
+              <ModePopup mode={mode} onModeChange={onModeChange}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="btn-neon shrink-0 rounded-xl h-11 w-11 bg-muted/50 hover:bg-muted border border-border/50"
+                  title="Select mode"
+                >
+                  <Plus className="w-5 h-5 text-neon-purple" />
+                </Button>
+              </ModePopup>
 
-          <div className="flex-1 relative">
-            <Textarea
-              ref={textareaRef}
-              value={input}
-              onChange={(e) => onInputChange(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={`Enter your topic for ${modeLabels[mode]}...`}
-              className="min-h-[44px] max-h-[200px] resize-none bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-foreground placeholder:text-muted-foreground pr-2"
-              rows={1}
-            />
+              {/* Hidden File Input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              
+              {/* Upload Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="btn-neon shrink-0 rounded-xl h-11 w-11 bg-muted/50 hover:bg-muted border border-border/50"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isExtracting}
+                title="Upload file"
+              >
+                {isExtracting ? (
+                  <Loader2 className="w-5 h-5 text-neon-purple animate-spin" />
+                ) : (
+                  <Upload className="w-5 h-5 text-neon-green" />
+                )}
+              </Button>
+
+              {/* Textarea */}
+              <div className="flex-1 relative">
+                <Textarea
+                  ref={textareaRef}
+                  value={input}
+                  onChange={(e) => onInputChange(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder={`Enter your topic for ${modeLabels[mode]}...`}
+                  className="min-h-[44px] max-h-[200px] resize-none bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-foreground placeholder:text-muted-foreground pr-2 py-3"
+                  rows={1}
+                />
+              </div>
+
+              {/* Submit Button */}
+              <Button
+                onClick={onSubmit}
+                disabled={isLoading || isExtracting || !input.trim()}
+                className="btn-neon shrink-0 rounded-xl h-11 w-11 bg-gradient-to-r from-neon-purple to-neon-pink hover:opacity-90 text-white border-0"
+                size="icon"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+              </Button>
+            </div>
           </div>
 
-          <Button
-            onClick={onSubmit}
-            disabled={isLoading || isExtracting || !input.trim()}
-            className="btn-neon shrink-0 rounded-full bg-neon-purple hover:bg-neon-purple/90 text-white"
-            size="icon"
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <Send className="w-5 h-5" />
-            )}
-          </Button>
-        </div>
-
-        <div className="text-center mt-2">
-          <span className="text-xs text-muted-foreground px-2 py-1 rounded-full bg-card/50">
-            Mode: <span className="text-neon-purple">{modeLabels[mode]}</span>
-          </span>
+          {/* Mode Indicator */}
+          <div className="flex items-center justify-center gap-2 mt-3">
+            <Sparkles className={`w-3 h-3 ${modeColors[mode]}`} />
+            <span className="text-xs text-muted-foreground">
+              Mode: <span className={modeColors[mode]}>{modeLabels[mode]}</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
