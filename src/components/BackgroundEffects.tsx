@@ -4,13 +4,13 @@ const studyEmojis = ['📚', '✏️', '📖', '🎓', '💡', '📝', '🔬', '
 
 const BackgroundEffects: React.FC = () => {
   const floatingEmojis = useMemo(() => {
-    return Array.from({ length: 12 }, (_, i) => ({
+    return Array.from({ length: 25 }, (_, i) => ({
       id: i,
       emoji: studyEmojis[Math.floor(Math.random() * studyEmojis.length)],
       left: Math.random() * 100,
-      delay: Math.random() * 20,
-      duration: 25 + Math.random() * 20,
-      size: 16 + Math.random() * 12,
+      delay: Math.random() * 25,
+      duration: 20 + Math.random() * 25,
+      size: 14 + Math.random() * 14,
     }));
   }, []);
 
