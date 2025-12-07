@@ -301,7 +301,6 @@
 .notes-output {
   background: hsl(0 0% 0%);
   color: hsl(0 0% 90%);
-  border: none;
 }
 
 .notes-output h1 {

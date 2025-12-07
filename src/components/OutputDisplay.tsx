@@ -123,10 +123,11 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
   }
 
   return (
-    <div className="flex-1 overflow-auto px-0 md:px-4 pb-48 pt-4">
-      <div className="w-full md:max-w-3xl md:mx-auto animate-fade-in">
+    <div className="flex-1 overflow-auto px-4 pb-48 pt-4">
+      <div className="max-w-3xl mx-auto animate-fade-in">
+        {/* Action Buttons */}
         {output && (
-          <div className="flex gap-3 mb-4 justify-end px-4 md:px-0">
+          <div className="flex gap-3 mb-6 justify-end">
             <Button
               variant="outline"
               size="sm"
@@ -152,13 +153,13 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading }) => {
           </div>
         )}
 
-        {/* Output Container - Full width on mobile */}
+        {/* Output Container - Pure black background */}
         <div
           ref={outputRef}
-          className={`notes-output p-4 md:p-8 md:rounded-2xl transition-all duration-300 ${
+          className={`notes-output rounded-2xl p-6 md:p-8 transition-all duration-300 border ${
             isLoading 
-              ? 'animate-border-glow' 
-              : ''
+              ? 'animate-border-glow border-gpt-blue/50' 
+              : 'border-border'
           }`}
         >
           {isLoading && !output && (

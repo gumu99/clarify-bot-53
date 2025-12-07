@@ -64,11 +64,11 @@ const ChatInput: React.FC<ChatInputProps> = ({
       {/* Small blur gradient above input */}
       <div className="absolute left-0 right-0 h-16 -top-16 bg-gradient-to-t from-background to-transparent pointer-events-none" />
       
-      <div className="relative px-2 md:px-4 pb-6 pt-2">
+      <div className="relative px-4 pb-6 pt-2">
         <div className="max-w-3xl mx-auto">
           {/* Input Container */}
           <div 
-            className={`input-glow rounded-2xl p-2 transition-all duration-300 bg-card border-0`}
+            className={`input-glow rounded-2xl p-2 transition-all duration-300 bg-card border border-border`}
           >
             <div className="flex items-end gap-2">
               {/* Mode Select Button */}
