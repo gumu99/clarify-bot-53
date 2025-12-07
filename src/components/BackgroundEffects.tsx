@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
 
+const studyEmojis = ['📚', '✏️', '📖', '🎓', '💡', '📝', '🔬', '📐', '🧠', '⭐', '✨', '📓', '🎯', '💻', '🔖'];
+
 const BackgroundEffects: React.FC = () => {
-  const particles = useMemo(() => {
-    return Array.from({ length: 15 }, (_, i) => ({
+  const floatingEmojis = useMemo(() => {
+    return Array.from({ length: 12 }, (_, i) => ({
       id: i,
+      emoji: studyEmojis[Math.floor(Math.random() * studyEmojis.length)],
       left: Math.random() * 100,
-      delay: Math.random() * 15,
-      duration: 20 + Math.random() * 15,
-      size: 2 + Math.random() * 2,
-      color: ['particle-purple', 'particle-pink'][Math.floor(Math.random() * 2)],
+      delay: Math.random() * 20,
+      duration: 25 + Math.random() * 20,
+      size: 16 + Math.random() * 12,
     }));
   }, []);
 
@@ -17,19 +19,22 @@ const BackgroundEffects: React.FC = () => {
       {/* Noise Overlay */}
       <div className="noise-overlay" />
       
-      {/* Floating Particles */}
-      {particles.map((particle) => (
+      {/* Floating Study Emojis */}
+      {floatingEmojis.map((item) => (
         <div
-          key={particle.id}
-          className={`particle ${particle.color}`}
+          key={item.id}
+          className="fixed pointer-events-none animate-emoji-float"
           style={{
-            left: `${particle.left}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            animationDelay: `${particle.delay}s`,
-            animationDuration: `${particle.duration}s`,
+            left: `${item.left}%`,
+            fontSize: `${item.size}px`,
+            animationDelay: `${item.delay}s`,
+            animationDuration: `${item.duration}s`,
+            opacity: 0.15,
+            filter: 'grayscale(0%)',
           }}
-        />
+        >
+          {item.emoji}
+        </div>
       ))}
     </>
   );
